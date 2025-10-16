@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>MapmyIndia Map Example</title>
+  <style>
+    /* Integrated CSS */
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+      background-color: #f5f5f5;
+    }
+
+    h2 {
+      text-align: center;
+      color: #333;
+    }
+
+    #map {
+      width: 100%;
+      height: 500px; /* Must have height */
+      border: 2px solid #444;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+
+<h2>MapmyIndia Map - My Location</h2>
+<div id="map"></div>
+
+<!-- MapmyIndia JS SDK with your API key -->
+<script src="https://apis.mapmyindia.com/advancedmaps/v1/oomznekafiqnyypesyirrjlupswmhirsjhuv/map_load?v=1.5"></script>
+
+<script>
+  // Initialize the map
+  var map = new MapmyIndia.Map("map", {
+    center: [28.6139, 77.2090], // Default: Delhi
+    zoom: 12
+  });
+
+  // Get user's current location
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(function(pos) {
+      var lat = pos.coords.latitude;
+      var lng = pos.coords.longitude;
+
+      // Add marker at current location
+      var marker = new MapmyIndia.Marker([lat, lng]).addTo(map);
+      map.setView([lat, lng], 14); // Zoom into location
+    }, function(err) {
+      alert("Could not get location: " + err.message);
+    });
+  } else {
+    alert("Geolocation not supported by this browser.");
+  }
+</script>
+
+</body>
+</html>
