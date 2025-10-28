@@ -1,177 +1,67 @@
-console.log("Hello World")
-a=3
-console.log(a);
-{
-let b=50;
+// Synchronous 
 
-console.log(b);
-console.log(a);
-}
-
-console.log(a);
-
-
-function sum(a,b){
-    return a+b;
-}
-
-console.log("sum=" +sum(12,30));
-
-function sub(a,b){
-    return a-b;
-}
-console.log(sub(50,30));
-let a=4;
-console.log(console.log(a));
-
-
-function register(){
-    console.log("register sucessfully")
-}
-register();
-
-function register(){
-    waitforfiveseconds();
- console.log('register end')   
-}
-function sendEmail(){
-    waitforfiveseconds();
- console.log('send Email end')   
-}
-function login(){
-    waitforfiveseconds();
- console.log('login end')   
-}
-function getData(){
-    waitforfiveseconds();
- console.log('get Data end')   
-}
-function displayData(){
-    waitforfiveseconds();
- console.log('Display Data end')   
-}
-function waitforfiveseconds(){
-    const ms=new Date().getTime()+5000;
-    while(new Date().getTime()<ms)
-    {}
-}
-register();
-sendEmail();
-login();
-getData();
-displayData();
-console.log('call other application')
-
-function register(cb){
-    setTimeout(()=>{
-      console.log('register end')   
-      cb();
-    },4000)
- 
-}
-function sendEmail(cb){
-   setTimeout(()=>{
-      console.log('Send Email end')   
-      cb();
-    },3000)  
-}
-function login(cb){
-    setTimeout(()=>{
-      console.log('Login end')   
-      cb();
-    },1000)  
-}
-function getData(cb){
-    setTimeout(()=>{
-      console.log('get Data end')   
-      cb();
-    },8000)   
-}
-function displayData(){
-    setTimeout(()=>{
-      console.log('display data end')   
-    },2000)  
-}
-
-//callback hell
-register(()=>{
-         sendEmail(()=>{
-                login(()=>{
-                      getData(()=>{
-                               displayData();
-                      });
-                });
-         });
-});
-
-
-
-
-console.log('call other application')
-
-function register(){
-    return new Promise((resolve,reject)=>{
-         setTimeout(()=>{
-      console.log('register end')   
-      resolve();
-    },4000)
-    });   
- }
-function sendEmail(){
-   return new Promise((resolve,reject)=>{
-         setTimeout(()=>{
-      console.log('send Email end')   
-      resolve();
-    },4000)
-});
-}
-function login(){
-    return new Promise((resolve,reject)=>{
-         setTimeout(()=>{
-      console.log('login end')   
-      reject('Login Error');
-    },4000)
-});
-}
-function getData(){
-     return new Promise((resolve,reject)=>{
-         setTimeout(()=>{
-      console.log('get data end')   
-      resolve();
-    },4000)
-});  
-}
-function displayData(){
-     return new Promise((resolve,reject)=>{
-         setTimeout(()=>{
-      console.log('display data end')   
-      resolve();
-    },4000)
-});  
-}
-
-// register()
-// .then(sendEmail)
-// .then(login)
-// .then(getData)
-// .then(displayData)
-// .catch((err)=>{
-// console.log('Error:'+err);
-// })
-
- async function f1(){ 
-    try{
-    await register();
-    await sendEmail();
-    await login();
-    await getData();
-    await displayData();
-    }
-    catch(err){
-        console.log('Error'+err)
+function login(username, password) {
+    if (username === "Anshul" && password === "1234") {
+        console.log(`Welcome back, ${username}!`);
+        return true;
+    } else {
+        console.log("Invalid username or password.");
+        return false;
     }
 }
-f1();
+
+function getData() {
+    console.log("Getting your data...");
+    for (let i = 0; i < 1e8; i++) {} 
+    return ["Mail", "Notifications", "Profile Info"];
+}
+
+function displayData(data) {
+    console.log("Here is your data:", data);
+}
+
+function logout(username) {
+    console.log(`Goodbye, ${username}. You have been logged out.`);
+}
+
+if (login("Anshul", "1234")) {
+    let data = getData();
+    displayData(data);
+    logout("Anshul");
+}
 
 
-console.log('call other application')
+// Asynchronous 
+
+function login(username, password) {
+    if (username === "Anshul" && password === "1234") {
+        console.log(`Welcome back, ${username}!`);
+        return true;
+    } else {
+        console.log("Invalid username or password.");
+        return false;
+    }
+}
+
+function getData(callback) {
+    console.log("Fetching your data, please wait...");
+    setTimeout(() => {
+        let data = ["Mail", "Notifications", "Profile Info"];
+        callback(data);
+    }, 2000);
+}
+
+function displayData(data) {
+    console.log("Here is your data:", data);
+}
+
+function logout(username) {
+    console.log(`Goodbye, ${username}. You have been logged out.`);
+}
+
+if (login("Anshul", "1234")) {
+    getData((data) => {
+        displayData(data);
+        logout("Anshul");
+    });
+}
